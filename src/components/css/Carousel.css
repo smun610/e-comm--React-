@@ -1,0 +1,11 @@
+.item carousel-item {
+    border: black;
+    outline: black  ;
+    background: #333;
+    color: whitesmoke;
+    display: block;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 15px 0;
+}

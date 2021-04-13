@@ -5,8 +5,18 @@ import "../css/Product.css";
 
 export class Product extends Component {
   static contextType = DatatContext;
+  
   render() {
+    let inStock = (stock , id)=> {
+      if (stock=== 0 ){
+        return <h1>Out of stock</h1>
+      }
+      return   <button onClick={() => this.context.addCart(id)}>Add to cart </button>
+  }
+    
     const { products } = this.context;
+
+   
     return (
       <div id="product">
         {products.map((product) => (
@@ -20,15 +30,19 @@ export class Product extends Component {
               </h4>
               <span>£{product.price}</span>
               <p>{product.desc}</p>
-              <button onClick={() => this.context.addCart(product._id)}>
-                Add to cart
-              </button>
+            
+              {inStock(product.stock, product._id)}
+              
+            
+             
             </div>
           </div>
         ))}
       </div>
     );
   }
+  
 }
 
 export default Product;
+

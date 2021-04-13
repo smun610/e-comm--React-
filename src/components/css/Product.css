@@ -25,6 +25,8 @@
     max-height: 300px;
     display: block; 
     object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
@@ -46,6 +48,13 @@
 .card p {
     margin: 10px 0;
   
+}
+
+.card h1 {
+    text-transform: uppercase;
+    text-align: center;
+    color: brown;
+    margin: 10px 0; 
 }
 
 .card button {

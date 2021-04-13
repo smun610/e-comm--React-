@@ -60,9 +60,24 @@ export class DataProvider extends Component {
     }
   };
 
+  updateStock = (product) => {
+    console.log (" product ", product.dbID);
+    let val = db.collection("Product").doc(product.dbID);
+    console.log(val)
+    db.collection("Product")
+      .doc(product.dbID)
+      .update({ stock: product.stock })
+      .then(() => {
+        console.log("Document successfully updated!");
+      })
+      .catch((error) => {
+        console.error("Error updating document: ", error);
+      });
+  };
+
   componentDidMount() {
     var testRef = db.collection("Product");
-    console.log("test ", testRef);
+ //   console.log("test ", testRef);
     const prevProducts = this.state.products;
     db.collection("Product").onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
@@ -77,6 +92,8 @@ export class DataProvider extends Component {
             price: change.doc.data().price,
             colours: change.doc.data().colours,
             count: change.doc.data().count,
+            stock: change.doc.data().stock,
+            dbID: change.doc.id,
           });
         }
         this.setState({
@@ -85,14 +102,14 @@ export class DataProvider extends Component {
       });
     });
 
-    const dataCart = JSON.parse(localStorage.getItem("dataCart"));
-    if (dataCart !== null) {
-      this.setState({ cart: dataCart });
-    }
-    const dataTotal = JSON.parse(localStorage.getItem("dataTotal"));
-    if (dataTotal !== null) {
-      this.setState({ total: dataTotal });
-    }
+  // const dataCart = JSON.parse(localStorage.getItem("dataCart"));
+    //if (dataCart !== null) {
+      //this.setState({ cart: dataCart });
+    //}
+    //const dataTotal = JSON.parse(localStorage.getItem("dataTotal"));
+    //if (dataTotal !== null) {
+      //this.setState({ total: dataTotal });
+    //}
   }
 
   reduction = (id) => {
@@ -111,6 +128,13 @@ export class DataProvider extends Component {
     cart.forEach((item) => {
       if (item._id === id) {
         item.count += 1;
+
+        if (item.stock>=item.count){
+          item.stock = item.stock -item.count ;
+          this.updateStock(item)
+        }else {
+          alert ("No More Stock");
+        }
       }
     });
     this.setState({ cart: cart });
@@ -162,7 +186,7 @@ export class DataProvider extends Component {
   }
 
   componentDidUpdate() {
-    localStorage.setItem("dataCart", JSON.stringify(this.state.cart));
-    localStorage.setItem("dataTotal", JSON.stringify(this.state.total));
+  // localStorage.setItem("dataCart", JSON.stringify(this.state.cart));
+   //localStorage.setItem("dataTotal", JSON.stringify(this.state.total));
   }
 }
