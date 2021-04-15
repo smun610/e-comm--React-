@@ -45,15 +45,17 @@ export class DataProvider extends Component {
     total: 0,
   };
 
-  addCart = (id) => {
+  addCart = (id, size) => {
     const { products, cart } = this.state;
     const check = cart.every((item) => {
       return item._id !== id;
     });
     if (check) {
-      const data = products.filter((product) => {
+      let data = products.filter((product) => {
         return product._id === id;
       });
+      data[0].size = size;
+      console.log ("size",  data);
       this.setState({ cart: [...cart, ...data] });
     } else {
       alert(" Already added");
@@ -76,7 +78,6 @@ export class DataProvider extends Component {
   };
 
   componentDidMount() {
-    var testRef = db.collection("Product");
  //   console.log("test ", testRef);
     const prevProducts = this.state.products;
     db.collection("Product").onSnapshot((snapshot) => {
@@ -94,6 +95,7 @@ export class DataProvider extends Component {
             count: change.doc.data().count,
             stock: change.doc.data().stock,
             dbID: change.doc.id,
+            size: "1"
           });
         }
         this.setState({
@@ -133,6 +135,8 @@ export class DataProvider extends Component {
           item.stock = item.stock -item.count ;
           this.updateStock(item)
         }else {
+          item.stock =  0 ;
+          this.updateStock(item)
           alert ("No More Stock");
         }
       }

@@ -43,6 +43,9 @@ export class Header extends Component {
             <li>
               <Link to="/about">About</Link>
             </li>
+            <li>
+              <Link to="/signUp">Become a member!</Link>
+            </li>
             <li className="close" onClick={this.menuToggle}>
               <img src={Exit} alt="" width="20" />
             </li>

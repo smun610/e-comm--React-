@@ -5,6 +5,8 @@ import { Route } from "react-router-dom";
 import Cart from "./section/Cart";
 import Payment from "./section/Payment";
 import Home from "./section/Home";
+import Contact from "./section/Contact";
+import SignUp from "./section/SignUp";
 
 export class Section extends Component {
   render() {
@@ -16,6 +18,8 @@ export class Section extends Component {
         <Route path="/cart" component={Cart} />
         <Route path="/payment" component={Payment} />
         <Route path="/home" component={Home} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/signUp" component={SignUp} />
       </section>
     );
   }

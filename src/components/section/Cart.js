@@ -28,6 +28,7 @@ export class Cart extends Component {
                   <span>£{item.price * item.count}</span>
                 </div>
                 <Colours colours={item.colours} />
+                <h6>SELECTED SIZE : {item.size}</h6>
                 <p> {item.desc}</p>
                 <p> {item.content}</p>
                 <div className="amount">

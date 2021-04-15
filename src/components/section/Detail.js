@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import "../css/Detail.css";
 import Colours from "./Colours";
 
+let size = "";
+
 export class Detail extends Component {
+  
   static contextType = DatatContext;
+ 
   //onClick={() => addCart(item._id)}
   state = {
     product: [],
@@ -20,6 +24,11 @@ export class Detail extends Component {
       this.setState({ product: data });
     }
   };
+
+  handleChange =(e) => {
+    size = e.target.value; 
+
+  }
 
   componentDidMount() {
     this.getProduct();
@@ -39,12 +48,22 @@ export class Detail extends Component {
                 <span>£{item.price} </span>
               </div>
               <Colours colours={item.colours} />
+              <label>
+                SIZE: 
+                <select onChange={this.handleChange}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="4">5</option>
+                </select>
+              </label>
               <p> {item.desc}</p>
               <p> {item.content}</p>
               <Link
                 to="/cart"
                 className="cart"
-                onClick={() => addCart(item._id)}
+                onClick={() => addCart(item._id, size)}
               >
                 Add to cart
               </Link>
